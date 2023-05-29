@@ -10,7 +10,11 @@ class PostSpiderSpider(scrapy.Spider):
                        'RETRY_TIMES': 5,
                        'DOWNLOAD_DELAY': 1
                        }
-    webhook_url = '<insert your own discord channel webhook url>'
+    # List of webhook URLs
+    webhook_urls = [
+        '<insert your discord channel webhook url>',
+        # Add more webhook URLs as needed
+    ]
     search_url = 'https://gall.dcinside.com/mgallery/board/lists?id=diablo2resurrected&s_type=search_subject_memo&s_keyword=.EB.8B.A4.EC.9D.8C.20.ED.85.8C.EB.9F.AC.EC.A1.B4'
 
     def start_requests(self):
@@ -51,13 +55,14 @@ class PostSpiderSpider(scrapy.Spider):
             color=16711680  # Red color
         )
 
-        # Initialize a webhook object
-        webhook = DiscordWebhook(url=self.webhook_url)
+        # Set the footer
+        embed.set_footer(text='Please note this info relies on Terror Zone Slave. Info can be incorrect or repeated.')
 
-        # Add the embed object to the webhook
-        webhook.add_embed(embed)
 
-        # Execute the webhook
-        response = webhook.execute()
+        # For each webhook URL, initialize a webhook object, add the embed, and execute
+        for url in self.webhook_urls:
+            webhook = DiscordWebhook(url=url)
+            webhook.add_embed(embed)
+            response = webhook.execute()
 
         print('POST SEND...')
