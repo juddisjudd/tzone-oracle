@@ -15,7 +15,7 @@ class PostSpiderSpider(scrapy.Spider):
         '<insert your discord channel webhook url>',
         # Add more webhook URLs as needed
     ]
-    search_url = 'https://gall.dcinside.com/mgallery/board/lists?id=diablo2resurrected&s_type=search_subject_memo&s_keyword=.EB.8B.A4.EC.9D.8C.20.ED.85.8C.EB.9F.AC.EC.A1.B4'
+    search_url = 'https://gall.dcinside.com/mgallery/board/lists/?id=diablo2resurrected&s_type=search_name&s_keyword=.ED.85.8C.EB.9F.AC.EC.A1.B4.EB.85.B8.EC.98.88'
 
     def start_requests(self):
         yield scrapy.Request(url=self.search_url, callback=self.parse)
